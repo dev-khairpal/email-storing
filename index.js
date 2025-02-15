@@ -1,14 +1,18 @@
 const express = require("express");
 const mongoose = require("mongoose");
-var bodyParser = require("body-parser");
+const bodyParser = require("body-parser");
+const dotenv = require('dotenv');
+dotenv.config()
 const app = express();
 const Email = require("./email.model");
+
+const PORT = process.env.PORT || 3000
 
 app.use(bodyParser.json());
 
 const connectDb = async () => {
   await mongoose.connect(
-    "mongodb+srv://devkhairpal:ITLnzdK6IAjea2NA@cluster0.om2gm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+    process.env.MONGO_URI
   );
   console.log("connecte to DB");
 };
@@ -26,6 +30,6 @@ app.post("/email", async (req, res) => {
   }
 });
 
-app.listen(6000, () => {
-  console.log("server is running on port 3000");
+app.listen(PORT, () => {
+  console.log("server is running");
 });
